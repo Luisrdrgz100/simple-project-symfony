@@ -21,3 +21,4 @@ composer.lock
 /bin/
 /var/
 phpunit.xml.dist
+/web/
