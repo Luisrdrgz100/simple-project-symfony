@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\Cliente;
 
 class DefaultController extends Controller
 {
@@ -15,8 +16,23 @@ class DefaultController extends Controller
     {
         return $this->render('default/index.html.twig');
     }
+    /**
+     * @Route("/clientes", name="clientes")
+     */
     public function clientesAction(Request $request)
     {
-        return $this->render('default/clientes.html.twig');
+        $clienteRepository = $this-> getDoctrine()->getRepository(Cliente::class);
+        $clientes = $clienteRepository -> findAll();
+        return $this->render('default/clientes.html.twig', array('clientes' => $clientes));
+    }
+    
+    /**
+     * @Route("/facturas", name="facturas")
+     */
+    public function facturasAction(Request $request)
+    {
+        $facturaRepository = $this-> getDoctrine()->getRepository(Factura::class);
+        $facturas = $facturaRepository -> findAll();
+        return $this->render('default/facturas.html.twig', array('facturas' => $facturas));
     }
 }

@@ -3,7 +3,31 @@
     Clientes
 {% endblock %}
 {% block body %}
-    Clientes
+        <div class="p-4 m-3">
+            <table class="table">
+            <thead class="table-primary">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Nombre y Apellido</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                    <tr>
+                    <td>{{cliente.id }}</td>
+                    <td>{{cliente.dni }}</td>
+                    <td>{{cliente.nombre }} {{cliente.apellido }}</td>
+                    <td>{{cliente.direccion }}</td>
+                    <td>{{cliente.telf }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+
 {% endblock %}
 
 {% block stylesheets %}
