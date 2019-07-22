@@ -25,20 +25,25 @@ class DefaultController extends Controller
         $clienteRepository = $this-> getDoctrine()->getRepository(Cliente::class);
         //$clientes = $clienteRepository -> findAll();
         $query = $clienteRepository->createQueryBuilder('c')
-            ->setFirstResult (3*($pag - 1))
-            -> setMaxResults (3)
+            ->setFirstResult (10*($pag - 1))
+            -> setMaxResults (10)
             ->getQuery();
         $clientes = $query -> getResult();
         return $this->render('default/clientes.html.twig', array('clientes' => $clientes, 'pag' => $pag));
     }
     
     /**
-     * @Route("/facturas", name="facturas")
+     * @Route("/facturas/{pag}", name="facturas")
      */
-    public function facturasAction(Request $request)
+    public function facturasAction(Request $request, $pag = 1)
     {
         $facturaRepository = $this-> getDoctrine()->getRepository(Factura::class);
-        $facturas = $facturaRepository -> findAll();
-        return $this->render('default/facturas.html.twig', array('facturas' => $facturas));
+        // $facturas = $facturaRepository -> findAll();
+        $query = $facturaRepository->createQueryBuilder('c')
+            ->setFirstResult (10*($pag - 1))
+            -> setMaxResults (10)
+            ->getQuery();
+        $facturas = $query -> getResult();
+        return $this->render('default/facturas.html.twig', array('facturas' => $facturas, 'pag' => $pag));
     }
 }
