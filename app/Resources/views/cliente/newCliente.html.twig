@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'forms/clienteForm.html.twig'%}
 {% block title %}
     Nuevo cliente
 {% endblock %}
 {% block body %}
-  {{ form_start (form) }}
-  {{ form_widget (form) }}
-  {{ form_end (form )}}
+<div class="container">
+<h1 class="mt-4"> Nuevo cliente </h1>
+
+ <div class="row">
+    <div class="col-md-6">
+      {{ form_start (form) }}
+      {{ form_widget (form) }}
+      {{ form_end (form ) }}
+    </div>
+ </div>
+  </div>
 {% endblock %}
