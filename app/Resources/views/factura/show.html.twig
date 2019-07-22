@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Factura</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ factura.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ factura.fecha }}</td>
+            </tr>
+            <tr>
+                <th>Importe</th>
+                <td>{{ factura.importe }}</td>
+            </tr>
+            <tr>
+                <th>Idcliente</th>
+                <td>{{ factura.idcliente }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('facturas_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('facturas_edit', { 'id': factura.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

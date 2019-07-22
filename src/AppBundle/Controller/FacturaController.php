@@ -2,43 +2,135 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Factura;
-use AppBundle\Forms\FacturaType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-
-
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/facturas")
+ * Factura controller.
+ *
+ * @Route("facturas")
  */
-
 class FacturaController extends Controller
 {
     /**
-     * @Route("/new", name="new")
+     * Lists all factura entities.
+     *
+     * @Route("/", name="facturas_index")
+     * @Method("GET")
      */
-    public function newFacturaAction(Request $request)
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $facturas = $em->getRepository('AppBundle:Factura')->findAll();
+
+        return $this->render('factura/index.html.twig', array(
+            'facturas' => $facturas,
+        ));
+    }
+
+    /**
+     * Creates a new factura entity.
+     *
+     * @Route("/new", name="facturas_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
     {
         $factura = new Factura();
-
-        $form = $this->createForm(FacturaType::class, $factura);
-
+        $form = $this->createForm('AppBundle\Form\FacturaType', $factura);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($factura);
+            $em->flush();
 
-            $factura = $form->getData();
-
-            $save = $this->getDoctrine()->getManager();
-            $save->persist($factura);
-            $save->flush();
-
-            return $this->redirectToRoute('facturas');
+            return $this->redirectToRoute('facturas_show', array('id' => $factura->getId()));
         }
-        return $this->render('factura/newFactura.html.twig', array('form' => $form->createView()));
+
+        return $this->render('factura/new.html.twig', array(
+            'factura' => $factura,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a factura entity.
+     *
+     * @Route("/{id}", name="facturas_show")
+     * @Method("GET")
+     */
+    public function showAction(Factura $factura)
+    {
+        $deleteForm = $this->createDeleteForm($factura);
+
+        return $this->render('factura/show.html.twig', array(
+            'factura' => $factura,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing factura entity.
+     *
+     * @Route("/{id}/edit", name="facturas_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, Factura $factura)
+    {
+        $deleteForm = $this->createDeleteForm($factura);
+        $editForm = $this->createForm('AppBundle\Form\FacturaType', $factura);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('facturas_edit', array('id' => $factura->getId()));
+        }
+
+        return $this->render('factura/edit.html.twig', array(
+            'factura' => $factura,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a factura entity.
+     *
+     * @Route("/{id}", name="facturas_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, Factura $factura)
+    {
+        $form = $this->createDeleteForm($factura);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($factura);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('facturas_index');
+    }
+
+    /**
+     * Creates a form to delete a factura entity.
+     *
+     * @param Factura $factura The factura entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Factura $factura)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('facturas_delete', array('id' => $factura->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
 }
