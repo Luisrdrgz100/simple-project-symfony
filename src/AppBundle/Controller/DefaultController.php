@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Factura;
 
 class DefaultController extends Controller
 {
@@ -33,6 +34,7 @@ class DefaultController extends Controller
     {
         $facturaRepository = $this-> getDoctrine()->getRepository(Factura::class);
         $facturas = $facturaRepository -> findAll();
+        var_dump($facturas);
         return $this->render('default/facturas.html.twig', array('facturas' => $facturas));
     }
 }

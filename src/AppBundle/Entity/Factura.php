@@ -22,16 +22,16 @@ class Factura
     private $id;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="string", length=255)
      */
     private $fecha;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="importe", type="integer")
+     * @ORM\Column(name="importe", type="string", length=255)
      */
     private $importe;
 
@@ -40,7 +40,7 @@ class Factura
      *
      * @ORM\Column(name="id_cliente", type="integer")
      */
-    private $idCliente;
+    private $id_cliente;
 
 
     /**
@@ -56,7 +56,7 @@ class Factura
     /**
      * Set fecha
      *
-     * @param \DateTime $fecha
+     * @param string $fecha
      *
      * @return Factura
      */
@@ -70,7 +70,7 @@ class Factura
     /**
      * Get fecha
      *
-     * @return \DateTime
+     * @return string
      */
     public function getFecha()
     {
@@ -80,7 +80,7 @@ class Factura
     /**
      * Set importe
      *
-     * @param integer $importe
+     * @param string $importe
      *
      * @return Factura
      */
@@ -94,7 +94,7 @@ class Factura
     /**
      * Get importe
      *
-     * @return int
+     * @return string
      */
     public function getImporte()
     {
@@ -102,27 +102,27 @@ class Factura
     }
 
     /**
-     * Set idCliente
+     * Set id_cliente
      *
-     * @param integer $idCliente
+     * @param integer $id_cliente
      *
      * @return Factura
      */
-    public function setIdCliente($idCliente)
+    public function setid_cliente($id_cliente)
     {
-        $this->idCliente = $idCliente;
+        $this->id_cliente = $id_cliente;
 
         return $this;
     }
 
     /**
-     * Get idCliente
+     * Get id_cliente
      *
      * @return int
      */
-    public function getIdCliente()
+    public function getid_cliente()
     {
-        return $this->idCliente;
+        return $this->id_cliente;
     }
 }
 
