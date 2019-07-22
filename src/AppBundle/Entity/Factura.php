@@ -38,9 +38,9 @@ class Factura
     /**
      * @var int
      *
-     * @ORM\Column(name="id_cliente", type="integer")
+     * @ORM\Column(name="idcliente", type="integer")
      */
-    private $id_cliente;
+    private $idcliente;
 
 
     /**
@@ -102,27 +102,27 @@ class Factura
     }
 
     /**
-     * Set id_cliente
+     * Set idcliente
      *
-     * @param integer $id_cliente
+     * @param integer $idcliente
      *
      * @return Factura
      */
-    public function setid_cliente($id_cliente)
+    public function setidcliente($idcliente)
     {
-        $this->id_cliente = $id_cliente;
+        $this->idcliente = $idcliente;
 
         return $this;
     }
 
     /**
-     * Get id_cliente
+     * Get idcliente
      *
      * @return int
      */
-    public function getid_cliente()
+    public function getidcliente()
     {
-        return $this->id_cliente;
+        return $this->idcliente;
     }
 }
 

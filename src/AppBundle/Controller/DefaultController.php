@@ -18,13 +18,18 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig');
     }
     /**
-     * @Route("/clientes", name="clientes")
+     * @Route("/clientes/{pag}", name="clientes")
      */
-    public function clientesAction(Request $request)
+    public function clientesAction(Request $request, $pag=1)
     {
         $clienteRepository = $this-> getDoctrine()->getRepository(Cliente::class);
-        $clientes = $clienteRepository -> findAll();
-        return $this->render('default/clientes.html.twig', array('clientes' => $clientes));
+        //$clientes = $clienteRepository -> findAll();
+        $query = $clienteRepository->createQueryBuilder('c')
+            ->setFirstResult (3*($pag - 1))
+            -> setMaxResults (3)
+            ->getQuery();
+        $clientes = $query -> getResult();
+        return $this->render('default/clientes.html.twig', array('clientes' => $clientes, 'pag' => $pag));
     }
     
     /**
@@ -34,7 +39,6 @@ class DefaultController extends Controller
     {
         $facturaRepository = $this-> getDoctrine()->getRepository(Factura::class);
         $facturas = $facturaRepository -> findAll();
-        var_dump($facturas);
         return $this->render('default/facturas.html.twig', array('facturas' => $facturas));
     }
 }
