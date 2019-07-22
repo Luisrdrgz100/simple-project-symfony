@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 /**
-* @Route("/clientes")
-*/
+ * @Route("/clientes")
+ */
 
 class ClienteController extends Controller
 {
@@ -24,21 +24,21 @@ class ClienteController extends Controller
     public function newClienteAction(Request $request)
     {
         $cliente = new Cliente();
-       
-        $form = $this-> createForm (ClienteType::class, $cliente);
-        
-        $form -> handleRequest ($request);
+
+        $form = $this->createForm(ClienteType::class, $cliente);
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $cliente = $form->getData();
-        
-            $save = $this-> getDoctrine() -> getManager();
-            $save -> persist($cliente);
-            $save -> flush();
+
+            $save = $this->getDoctrine()->getManager();
+            $save->persist($cliente);
+            $save->flush();
 
             return $this->redirectToRoute('clientes');
         }
-        return $this->render('cliente/newCliente.html.twig', array ('form' => $form -> createView()));
+        return $this->render('cliente/newCliente.html.twig', array('form' => $form->createView()));
     }
 }

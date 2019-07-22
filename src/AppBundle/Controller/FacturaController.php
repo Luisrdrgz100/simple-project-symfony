@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 /**
-* @Route("/facturas")
-*/
+ * @Route("/facturas")
+ */
 
 class FacturaController extends Controller
 {
@@ -24,21 +24,21 @@ class FacturaController extends Controller
     public function newFacturaAction(Request $request)
     {
         $factura = new Factura();
-       
-        $form = $this-> createForm (FacturaType::class, $factura);
-        
-        $form -> handleRequest ($request);
+
+        $form = $this->createForm(FacturaType::class, $factura);
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $factura = $form->getData();
-        
-            $save = $this-> getDoctrine() -> getManager();
-            $save -> persist($factura);
-            $save -> flush();
+
+            $save = $this->getDoctrine()->getManager();
+            $save->persist($factura);
+            $save->flush();
 
             return $this->redirectToRoute('facturas');
         }
-        return $this->render('factura/newFactura.html.twig', array ('form' => $form -> createView()));
+        return $this->render('factura/newFactura.html.twig', array('form' => $form->createView()));
     }
 }
